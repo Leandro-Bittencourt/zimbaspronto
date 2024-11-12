@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Conta</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+        }
+        .container {
+            width: 300px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .input-group {
+            position: relative;
+            margin-bottom: 15px;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 10px 40px 10px 10px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .input-group .icon {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            font-size: 16px;
+            color: #999;
+            cursor: pointer;
+        }
+        .text {
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 20px;
+        }
+        .text a {
+            color: #ff4d69;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .button {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            color: white;
+            background-color: #ff4d69;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .button:hover {
+            background-color: #e0435f;
+        }
+        .login-text {
+            font-size: 12px;
+            margin-top: 15px;
+            color: #888;
+        }
+        .login-text a {
+            color: #ff4d69;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+    <script>
+        function createAccount() {
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+            const confirmPassword = document.getElementById("confirmPassword").value;
+
+            if (password !== confirmPassword) {
+                alert("As senhas não coincidem. Tente novamente.");
+                return;
+            }
+            const users = JSON.parse(localStorage.getItem("users")) || [];
+            users.push({ username, password });
+            localStorage.setItem("users", JSON.stringify(users));
+
+            alert("Conta criada com sucesso!");
+            window.location.href = "login.html";
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="title">CRIAR CONTA</div>
+        
+        <div class="input-group">
+            <input type="text" id="username" placeholder="Username or Email" required>
+            <span class="icon">👤</span>
+        </div>
+
+        <div class="input-group">
+            <input type="password" id="password" placeholder="Password" required>
+            <span class="icon">👁️</span>
+        </div>
+
+        <div class="input-group">
+            <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+            <span class="icon">👁️</span>
+        </div>
+        
+        <div class="text">
+            By clicking the <a href="#">Register</a> button, you agree<br>to the public offer
+        </div>
+
+        <button class="button" onclick="createAccount()">Create Account</button>
+
+        <div class="login-text">
+            I Already Have an Account <a href="login.html">Login</a>
+        </div>
+    </div>
+</body>
+</html>

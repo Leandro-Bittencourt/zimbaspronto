@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Produto</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .logo {
+            margin-top: 20px;
+        }
+        h1 {
+            margin-top: 10px;
+        }
+        input, button {
+            display: block;
+            margin: 10px 0;
+            padding: 10px;
+            width: 100%;
+            font-size: 16px;
+        }
+        .product-details {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        .product-details input {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+        .buttons button {
+            width: 48%;
+        }
+    </style>
+    <script>
+        function getProductsFromStorage() {
+            return JSON.parse(localStorage.getItem("products")) || [];
+        }
+
+        function saveProductsToStorage(products) {
+            localStorage.setItem("products", JSON.stringify(products));
+        }
+
+        function loadProduct() {
+            const productIndex = localStorage.getItem("editProductIndex");
+            const products = getProductsFromStorage();
+            const product = products[productIndex];
+
+            document.getElementById("productName").value = product.name;
+            document.getElementById("productPrice").value = product.price;
+            document.getElementById("productSizes").value = product.sizes.join(", ");
+            document.getElementById("productQuantity").value = product.quantity;
+        }
+
+        function saveProduct() {
+            const productIndex = localStorage.getItem("editProductIndex");
+            const products = getProductsFromStorage();
+            const product = products[productIndex];
+
+            product.name = document.getElementById("productName").value;
+            product.price = document.getElementById("productPrice").value;
+            product.sizes = document.getElementById("productSizes").value.split(",").map(size => size.trim());
+            product.quantity = parseInt(document.getElementById("productQuantity").value);
+
+            saveProductsToStorage(products);
+            alert("Produto editado com sucesso!");
+            window.location.href = "editar.html";
+        }
+
+        function deleteProduct() {
+            const productIndex = localStorage.getItem("editProductIndex");
+            const products = getProductsFromStorage();
+
+            if (confirm("Tem certeza que deseja excluir este produto?")) {
+                products.splice(productIndex, 1);
+                saveProductsToStorage(products);
+                alert("Produto excluído com sucesso!");
+                window.location.href = "editar.html"; 
+            }
+        }
+
+        window.onload = loadProduct;
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="logo.png" alt="Logo" width="150">
+        </div>
+
+        <h1>Editar Produto</h1>
+
+        <div class="product-details">
+            <input type="text" id="productName" placeholder="Nome do Produto">
+            <input type="text" id="productPrice" placeholder="Preço do Produto">
+            <input type="text" id="productSizes" placeholder="Tamanhos (separados por vírgula)">
+            <input type="number" id="productQuantity" placeholder="Quantidade em Estoque">
+        </div>
+
+        <div class="buttons">
+            <button onclick="saveProduct()">Salvar</button>
+            <button onclick="window.location.href='editar.html'">Voltar</button>
+        </div>
+
+        <div class="buttons">
+            <button onclick="deleteProduct()" style="background-color: #ff4d69; color: white;">Excluir Produto</button>
+        </div>
+    </div>
+</body>
+</html>

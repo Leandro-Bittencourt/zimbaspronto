@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escolha Seu Tênis</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            width: 300px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        /* Estilos do logotipo */
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px; /* Tamanho do texto do logo */
+            color: #ff4d69;
+            margin-bottom: 20px;
+        }
+        .logo-icon {
+            width: 60px; /* Tamanho do ícone do logo */
+            height: 60px; /* Tamanho do ícone do logo */
+            background: linear-gradient(135deg, #ff4d69 50%, #4d94ff 50%);
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 10px;
+            position: relative;
+        }
+        .logo-icon::before {
+            content: '';
+            position: absolute;
+            top: 12px; /* Posição do círculo branco interno */
+            left: 12px;
+            width: 36px; /* Tamanho do círculo branco interno */
+            height: 36px;
+            background-color: white;
+            border-radius: 50%;
+        }
+        .logo-text {
+            font-weight: bold;
+        }
+        /* Estilos da página */
+        .sneaker-image {
+            width: 100%;
+            max-width: 200px;
+            margin-bottom: 20px;
+        }
+        .title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .description {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 20px;
+        }
+        .button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #ff4d69;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .button:hover {
+            background-color: #e0435f;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <div class="logo-icon"></div>
+            <span class="logo-text">ZIMBA'S</span>
+        </div>
+        
+        <img src="dunk.webp">
+        <div class="title">ESCOLHA SEU TÊNIS</div>
+        <div class="description">
+            ESCOLHA ENTRE OS DIVERSOS MODELOS DISPONÍVEIS NO SITE, VERIFIQUE A DISPONIBILIDADE DE TAMANHOS E ADICIONE AO SEU CARRINHO
+        </div>
+        <button class="button" onclick="window.location.href='cadastro.html'">Continuar</button>
+    </div>
+</body>
+</html>

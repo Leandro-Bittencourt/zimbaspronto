@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produto - Dunk low Off-White</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f5f5f5;
+        }
+
+        .header {
+            width: 100%;
+            padding: 20px;
+            background-color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .header img {
+            max-width: 150px;
+            height: auto;
+        }
+
+        .product-container {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            margin-top: 20px;
+            display: flex;
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .product-image {
+            flex: 1;
+            padding-right: 20px;
+        }
+
+        .product-image img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .product-details {
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .product-name {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .product-price {
+            font-size: 20px;
+            color: #333;
+            margin: 10px 0;
+        }
+
+        .product-sizes {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+
+        .sizes-container {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .size-button {
+            padding: 10px;
+            border: 1px solid #007bff;
+            border-radius: 5px;
+            background-color: #fff;
+            color: #007bff;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        .size-button:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .size-button.selected {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .buy-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            text-align: center;
+            width: fit-content;
+        }
+
+        .buy-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    <script>
+        function selectSize(button) {
+            document.querySelectorAll('.size-button').forEach(btn => btn.classList.remove('selected'));
+            button.classList.add('selected');
+        }
+
+        function buyProduct() {
+            const selectedSize = document.querySelector('.size-button.selected');
+            if (!selectedSize) {
+                alert("Por favor, selecione um tamanho antes de comprar.");
+                return;
+            }
+            window.location.href = "comprardunk.html";
+        }
+    </script>
+</head>
+<body>
+
+    <div class="header">
+        <img src="logo.png" alt="Logo da Loja">
+    </div>
+
+    <div class="product-container">
+        <div class="product-image">
+            <img src="yeezy.jpg">
+        </div>
+
+        <div class="product-details">
+            <p class="product-name">Yeezy 350 V2 Zebra</p>
+            <p class="product-price">R$2.100,00</p>
+            <div class="product-sizes">
+                <strong>Tamanhos Disponíveis:</strong>
+                <div class="sizes-container">
+                    <button class="size-button" onclick="selectSize(this)">37</button>
+                    <button class="size-button" onclick="selectSize(this)">38</button>
+                    <button class="size-button" onclick="selectSize(this)">39</button>
+                    <button class="size-button" onclick="selectSize(this)">40</button>
+                    <button class="size-button" onclick="selectSize(this)">41</button>
+                    <button class="size-button" onclick="selectSize(this)">42</button>
+                </div>
+            </div>
+            <button class="buy-button" onclick="window.location.href='compraryeezy.html'">Comprar</button>
+        </div>
+    </div>
+
+</body>
+</html>

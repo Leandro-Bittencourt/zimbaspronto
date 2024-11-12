@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Produtos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: auto;
+        }
+        h1 {
+            text-align: center;
+        }
+        input, button {
+            display: block;
+            margin: 10px 0;
+            padding: 8px;
+            width: 100%;
+        }
+        .product-list {
+            margin-top: 20px;
+        }
+        .product-item {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .product-item-details {
+            flex-grow: 1;
+        }
+        .product-item img {
+            max-width: 100px;
+            max-height: 100px;
+            object-fit: cover;
+            margin-left: 10px;
+        }
+    </style>
+    <script>
+        function saveProductsToStorage(products) {
+            localStorage.setItem("products", JSON.stringify(products));
+        }
+
+        function getProductsFromStorage() {
+            return JSON.parse(localStorage.getItem("products")) || [];
+        }
+
+        function addProduct() {
+            const name = document.getElementById("productName").value;
+            const price = document.getElementById("productPrice").value;
+            const sizes = document.getElementById("productSizes").value.split(',').map(size => size.trim());
+            const quantity = parseInt(document.getElementById("productQuantity").value);
+            const image = document.getElementById("productImage").files[0];
+
+            if (name && price && sizes.length && !isNaN(quantity)) {
+                const products = getProductsFromStorage();
+
+                let imageBase64 = null;
+                if (image) {
+                    const reader = new FileReader();
+                    reader.onloadend = function() {
+                        imageBase64 = reader.result;
+
+                        products.push({
+                            name: name,
+                            price: price,
+                            sizes: sizes,
+                            quantity: quantity,
+                            image: imageBase64
+                        });
+
+                        saveProductsToStorage(products);
+
+                        document.getElementById("productName").value = "";
+                        document.getElementById("productPrice").value = "";
+                        document.getElementById("productSizes").value = "";
+                        document.getElementById("productQuantity").value = "";
+                        document.getElementById("productImage").value = "";
+
+                        alert("Produto adicionado com sucesso!");
+                        displayProducts();
+                    };
+                    reader.readAsDataURL(image);
+                } else {
+
+                    products.push({
+                        name: name,
+                        price: price,
+                        sizes: sizes,
+                        quantity: quantity,
+                        image: null
+                    });
+
+                    saveProductsToStorage(products);
+
+                    document.getElementById("productName").value = "";
+                    document.getElementById("productPrice").value = "";
+                    document.getElementById("productSizes").value = "";
+                    document.getElementById("productQuantity").value = "";
+                    document.getElementById("productImage").value = "";
+
+                    alert("Produto adicionado com sucesso!");
+                    displayProducts();
+                }
+            } else {
+                alert("Por favor, preencha todos os campos corretamente.");
+            }
+        }
+
+        function displayProducts() {
+            const products = getProductsFromStorage();
+            const productList = document.getElementById("productList");
+            productList.innerHTML = "";
+            products.forEach((product, index) => {
+                const productItem = document.createElement("div");
+                productItem.className = "product-item";
+                
+                const productDetails = document.createElement("div");
+                productDetails.className = "product-item-details";
+                productDetails.innerHTML = `
+                    <strong>Nome:</strong> ${product.name}<br>
+                    <strong>Valor:</strong> ${product.price}<br>
+                    <strong>Tamanhos:</strong> ${product.sizes.join(', ')}<br>
+                    <strong>Quantidade:</strong> ${product.quantity}
+                `;
+
+                if (product.image) {
+                    const productImage = document.createElement("img");
+                    productImage.src = product.image;
+                    productItem.appendChild(productImage);
+                }
+
+                const editButton = document.createElement("button");
+                editButton.textContent = "Editar";
+                editButton.onclick = function() {
+                    localStorage.setItem("editProductIndex", index);
+                    window.location.href = "editarproduto.html";
+                };
+
+                productItem.appendChild(productDetails);
+                productItem.appendChild(editButton);
+                productList.appendChild(productItem);
+            });
+        }
+
+        window.onload = function() {
+            const initialProducts = [
+                { name: "Dunk low Off-White", price: "R$3.500,00", sizes: [38, 39, 40, 41, 42, 43, 44], quantity: 23, image: null },
+                { name: "Yeezy 350 V2 Zebra", price: "R$2.100,00", sizes: [37, 38, 39, 40, 41, 42], quantity: 40, image: null },
+                { name: "Jordan 1 Chicago", price: "R$2.400,00", sizes: [40, 41], quantity: 4, image: null },
+                { name: "Jordan 4", price: "R$1.900,00", sizes: [34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45], quantity: 102, image: null },
+                { name: "Air Force 1 Tiffany", price: "R$22.400,00", sizes: [41], quantity: 1, image: null }
+            ];
+
+            if (!localStorage.getItem("products")) {
+                saveProductsToStorage(initialProducts);
+            }
+            displayProducts();
+        };
+    </script>
+</head>
+<body>
+    <h1>Adicionar Produto</h1>
+    <input type="text" id="productName" placeholder="Nome do Produto">
+    <input type="text" id="productPrice" placeholder="Preço do Produto">
+    <input type="text" id="productSizes" placeholder="Tamanhos (separados por vírgula)">
+    <input type="number" id="productQuantity" placeholder="Quantidade em Estoque">
+    <input type="file" id="productImage" accept="image/*">
+    <button onclick="addProduct()">Adicionar</button>
+
+    <div class="product-list" id="productList"></div>
+</body>
+</html>
+

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+        }
+        .container {
+            width: 300px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .input-group {
+            position: relative;
+            margin-bottom: 15px;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 10px 40px 10px 10px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .input-group .icon {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            font-size: 16px;
+            color: #999;
+            cursor: pointer;
+        }
+        .button {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            color: white;
+            background-color: #ff4d69;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-bottom: 10px;
+        }
+        .button:hover {
+            background-color: #e0435f;
+        }
+        .back-button {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            color: #ff4d69;
+            background-color: transparent;
+            border: 2px solid #ff4d69;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .back-button:hover {
+            background-color: #ff4d69;
+            color: white;
+        }
+    </style>
+    <script>
+
+        function handleLogin() {
+            const emailInput = document.getElementById("email").value;
+            const passwordInput = document.getElementById("password").value;
+
+            const users = [
+                {
+                    username: "leandro@admin.com",
+                    password: "leandro1"
+                },
+                {
+                    username: "richard@gmail.com",
+                    password: "1"
+                },
+                {
+                    username: "zimba@gmail.com",
+                    password: "2"
+                }
+            ];
+
+            if (!localStorage.getItem("users")) {
+                localStorage.setItem("users", JSON.stringify(users));
+            }
+
+            const storedUsers = JSON.parse(localStorage.getItem("users"));
+            const user = storedUsers.find(u => u.username === emailInput);
+
+            if (!user) {
+                alert("Não há cadastro para esse email ou username.");
+                return;
+            }
+
+            if (user.password === passwordInput) {
+                if (emailInput === "leandro@admin.com") {
+                    window.location.href = "editar.html";
+                } else {
+                    window.location.href = "loja.html";
+                }
+            } else {
+                alert("Senha incorreta.");
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="title">LOGIN</div>
+        
+        <div class="input-group">
+            <input type="text" id="email" placeholder="Username or Email" required>
+            <span class="icon">👤</span>
+        </div>
+
+        <div class="input-group">
+            <input type="password" id="password" placeholder="Password" required>
+            <span class="icon">👁️</span>
+        </div>
+
+        <button class="button" onclick="handleLogin()">Continuar</button>
+        
+        <button class="back-button" onclick="window.location.href='cadastro.html'">Criar Conta</button>
+    </div>
+</body>
+</html>

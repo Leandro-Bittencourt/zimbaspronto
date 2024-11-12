@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprar Air Force 1 Tifanny</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        .header {
+            width: 100%;
+            padding: 20px;
+            background-color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .header img {
+            max-width: 150px;
+            height: auto;
+        }
+
+        .product-container {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: flex;
+            margin: 20px auto;
+            padding: 20px;
+        }
+
+        .product-image {
+            flex: 1;
+            padding-right: 20px;
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        .product-image img {
+            width: 100%;
+            max-width: 400px;
+            max-height: 250px;
+            object-fit: contain;
+            border-radius: 10px;
+        }
+
+        .product-details {
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-left: 20px;
+        }
+
+        .product-name {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .product-price {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .size-selected {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .method-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .method-option {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .method-option:hover {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .method-option.selected {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .buy-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            width: fit-content;
+        }
+
+        .buy-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    <script>
+        window.onload = function() {
+            const products = JSON.parse(localStorage.getItem("products")) || [];
+            const selectedProductIndex = localStorage.getItem("selectedProductIndex");
+            const product = products[selectedProductIndex];
+            
+            if (product) {
+                document.getElementById("productImage").src = product.image || "force1.avif";
+                document.getElementById("productName").textContent = product.name;
+                document.getElementById("productPrice").textContent = product.price;
+                document.getElementById("sizeSelected").textContent = `Tamanho Selecionado: ${localStorage.getItem("selectedSize") || "Nenhum"}`;
+            }
+        }
+
+        function selectMethod(methodType, element) {
+            const allMethods = document.querySelectorAll(`.${methodType}`);
+            allMethods.forEach(method => method.classList.remove('selected'));
+            element.classList.add('selected');
+        }
+
+        function confirmPurchase() {
+            const size = localStorage.getItem("selectedSize");
+            if (!size) {
+                alert("Por favor, selecione um tamanho antes de prosseguir.");
+                return;
+            }
+            const shipping = document.querySelector('.shipping-methods .selected');
+            const payment = document.querySelector('.payment-methods .selected');
+            if (!shipping || !payment) {
+                alert("Por favor, selecione a forma de envio e pagamento.");
+                return;
+            }
+            alert("Compra realizada com sucesso!");
+        }
+    </script>
+</head>
+<body>
+
+    <div class="header">
+        <img src="logo.png" alt="Logo da Loja">
+    </div>
+
+    <div class="product-container">
+        <div class="product-image">
+            <img id="productImage" src="force1.avif">
+        </div>
+
+        <div class="product-details">
+            <p id="productName" class="product-name">Air Force 1 Tiffany</p>
+            <p id="productPrice" class="product-price">R$22.40000</p>
+            <p id="sizeSelected" class="size-selected">Tamanho Selecionado: Nenhum</p>
+
+            <div class="shipping-methods">
+                <p class="method-title">Formas de Envio</p>
+                <div class="method-option" onclick="selectMethod('shipping-methods', this)">Sedex</div>
+                <div class="method-option" onclick="selectMethod('shipping-methods', this)">FedEx</div>
+                <div class="method-option" onclick="selectMethod('shipping-methods', this)">Jadlog</div>
+            </div>
+
+            <div class="payment-methods">
+                <p class="method-title">Formas de Pagamento</p>
+                <div class="method-option" onclick="selectMethod('payment-methods', this)">Pix</div>
+                <div class="method-option" onclick="selectMethod('payment-methods', this)">Boleto</div>
+                <div class="method-option" onclick="selectMethod('payment-methods', this)">Cartão de Crédito</div>
+                <div class="method-option" onclick="selectMethod('payment-methods', this)">Cartão de Débito</div>
+            </div>
+
+            <button class="buy-button" onclick="confirmPurchase()">Finalizar Compra</button>
+            <button class="buy-button" onclick="window.location.href='loja.html'">Voltar à Loja</button>
+        </div>
+    </div>
+
+</body>
+</html>
